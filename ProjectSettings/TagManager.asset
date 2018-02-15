@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: paredes
+    uniqueID: 3794959355
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: plataformas
+    uniqueID: 329571487
     locked: 0
