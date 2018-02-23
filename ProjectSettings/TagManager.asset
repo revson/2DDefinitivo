@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - caixa
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - ground
+  - teste
   - 
   - 
   - 
@@ -38,12 +39,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: backGround
+    uniqueID: 2928251063
+    locked: 0
   - name: paredes
     uniqueID: 3794959355
+    locked: 0
+  - name: objetos decoracoes
+    uniqueID: 3079848021
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: plataformas
     uniqueID: 329571487
+    locked: 0
+  - name: decoracao primeiro plano
+    uniqueID: 2561136529
     locked: 0

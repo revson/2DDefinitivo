@@ -8,6 +8,7 @@ public class playerScript : MonoBehaviour {
 	private Rigidbody2D playerRb;
 
 	public Transform groundCheck; // objeto responsavel por indicar se o personagem esta sobre a superficie
+	public LayerMask whatIsGround; //indica o que e superficie para o teste do grounded
 
 	public float speed; // velocidade de movimento do personagem
 	public float jumpForce; //velocidade aplicada para gerar o pulo do personagem
@@ -20,6 +21,10 @@ public class playerScript : MonoBehaviour {
 
 	public Collider2D standing, crounching; // colisor em pe e colisor abaixado
 
+	public Transform hand;
+	private Vector3 dir = Vector3.right;
+	public LayerMask interacao;
+
 	// Use this for initialization
 	void Start () {
 
@@ -30,8 +35,10 @@ public class playerScript : MonoBehaviour {
 
 	void FixedUpdate(){ // taxa de atualizacao fixa de 0.02, onde fica os comandos relacionados a fisica
 
-		Grounded = Physics2D.OverlapCircle (groundCheck.position,0.02f);
+		Grounded = Physics2D.OverlapCircle (groundCheck.position,0.02f, whatIsGround);
 		playerRb.velocity = new Vector2 (h * speed, playerRb.velocity.y);
+
+		interagir ();
 
 	}
 	
@@ -92,6 +99,8 @@ public class playerScript : MonoBehaviour {
 		playerAnimator.SetBool ("grounded", Grounded);
 		playerAnimator.SetInteger ("idAnimation", idAnimation);
 		playerAnimator.SetFloat ("speedY", playerRb.velocity.y);
+
+
 	}
 
 	void flip(){
@@ -99,6 +108,7 @@ public class playerScript : MonoBehaviour {
 		float x = transform.localScale.x;
 		x *= -1; //multiplicado por -1 inverte o sinal do scale x
 		transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
+		dir.x = x;
 	}
 
 	void atack(int atk){
@@ -113,6 +123,16 @@ public class playerScript : MonoBehaviour {
 			break;
 		}
 
+	}
+
+	void interagir(){
+		RaycastHit2D hit = Physics2D.Raycast (hand.position, dir, 0.1f, interacao);
+		Debug.DrawRay (hand.position, dir * 0.1f, Color.red);
+
+		if(hit == true){
+
+			print (hit.collider.gameObject.name);
+		}
 	}
 
 }
