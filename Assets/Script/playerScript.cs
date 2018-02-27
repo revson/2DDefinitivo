@@ -21,9 +21,11 @@ public class playerScript : MonoBehaviour {
 
 	public Collider2D standing, crounching; // colisor em pe e colisor abaixado
 
+	// interacao com itens
 	public Transform hand;
 	private Vector3 dir = Vector3.right;
 	public LayerMask interacao;
+	public GameObject objetoInteracao;
 
 	// Use this for initialization
 	void Start () {
@@ -71,8 +73,13 @@ public class playerScript : MonoBehaviour {
 			idAnimation = 0;
 		}
 
-		if (Input.GetButtonDown ("Fire1") && v >= 0 && attacking == false) {
+		if (Input.GetButtonDown ("Fire1") && v >= 0 && attacking == false && objetoInteracao == null) {
 			playerAnimator.SetTrigger ("atack");
+		}
+
+		if (Input.GetButtonDown ("Fire1") && v >= 0 && attacking == false && objetoInteracao != null) {
+			//manda mensagem para o objeto e se nao tiver o objeto nao retorna erro
+			objetoInteracao.SendMessage ("interacao", SendMessageOptions.DontRequireReceiver);
 		}
 
 		if(Input.GetButtonDown("Jump") && Grounded == true && attacking == false){
@@ -129,9 +136,11 @@ public class playerScript : MonoBehaviour {
 		RaycastHit2D hit = Physics2D.Raycast (hand.position, dir, 0.1f, interacao);
 		Debug.DrawRay (hand.position, dir * 0.1f, Color.red);
 
-		if(hit == true){
+		if (hit == true) {
 
-			print (hit.collider.gameObject.name);
+			objetoInteracao = hit.collider.gameObject;
+		} else {
+			objetoInteracao = null;
 		}
 	}
 
